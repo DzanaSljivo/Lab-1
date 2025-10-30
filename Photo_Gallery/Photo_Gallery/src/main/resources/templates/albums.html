@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" />
+    <title>Foto Galerija</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}" />
+</head>
+<body>
+
+<header>
+    <h1>📸 Foto Galerija</h1>
+    <p>Otkrijte i istražite predivne trenutke zabilježene u našim albumima. Svaka fotografija priča svoju priču!</p>
+</header>
+
+<div class="albums-grid">
+    <div class="album-card" th:each="a : ${albums}">
+        <div class="album-img-wrapper">
+            <img th:src="@{'/images/' + ${a.coverImage}}" alt="Naslovna Fotografija Albuma" class="album-cover" />
+            <div class="overlay">
+                <a th:href="@{'/albums/action/' + ${a.id}}" class="btn">Otvori Album</a>
+            </div>
+        </div>
+        <h2 th:text="${a.naziv}"></h2>
+        <p th:text="${a.opis}"></p>
+    </div>
+</div>
+
+</body>
+</html>

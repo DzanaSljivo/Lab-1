@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" />
+    <title>Sve Fotografije</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}" />
+</head>
+<body>
+
+<header>
+    <h1>📷 Sve Fotografije</h1>
+    <p>Pregledajte sve predivne trenutke zabilježene u našoj galeriji. Kliknite za upravljanje albumima ili uklanjanje fotografija.</p>
+    <a th:href="@{/albums}" class="btn">← Nazad na Albume</a>
+</header>
+
+<div class="photos-grid">
+    <div class="photo-card" th:each="p : ${photos}">
+        <div class="photo-img-wrapper">
+            <img th:src="@{'/images/' + ${p.filename}}" alt="Fotografija" class="photo-img" />
+            <div class="overlay">
+                <p th:text="${p.available} ? 'Dostupna' : 'Dodana u ' + p.album.naziv"></p>
+                <form th:if="${p.album != null}" th:action="@{/photos/remove}" method="post">
+                    <input type="hidden" name="photoId" th:value="${p.id}">
+                    <input type="hidden" name="albumId" th:value="${p.album.id}">
+                    <button type="submit" class="btn">Ukloni</button>
+                </form>
+            </div>
+        </div>
+        <h3 th:text="${p.title}"></h3>
+    </div>
+</div>
+
+</body>
+</html>
