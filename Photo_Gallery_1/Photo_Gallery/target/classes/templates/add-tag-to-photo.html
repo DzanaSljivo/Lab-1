@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Dodaj Tag na Fotografiju</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}" />
+</head>
+<body>
+<header>
+    <h1>📷 Dodaj Tag na Fotografiju</h1>
+</header>
+
+<div class="photos-grid">
+    <div th:each="photo : ${photos}" class="photo-card">
+        <div class="photo-img-wrapper">
+            <img th:src="${photo.imageUrl}" alt="Fotografija" class="photo-img"/>
+
+            <div class="overlay">
+                <form th:action="@{/tags/addToPhoto}" method="post">
+                    <input type="hidden" name="photoId" th:value="${photo.id}" />
+
+                    <select name="tagId" required>
+                        <option th:each="tag : ${tags}" th:value="${tag.id}" th:text="${tag.name}"></option>
+                    </select>
+
+                    <!-- Dugme sada koristi klasu .btn da se uklopi sa ostalim dugmadima -->
+                    <button type="submit" class="btn">Dodaj Tag</button>
+                </form>
+            </div>
+        </div>
+
+        <h3 th:text="${photo.title}">Naslov</h3>
+        <p th:text="${photo.description}">Opis fotografije</p>
+    </div>
+</div>
+
+<!-- Nazad na listu tagova -->
+<a th:href="@{/tags}" class="btn">← Nazad na tagove</a>
+</body>
+</html>

@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Tags</title>
+</head>
+<body>
+
+<header>
+    <h1>🏷️ Tags</h1>
+</header>
+
+
+<!-- Forma za dodavanje novog taga -->
+<form th:action="@{/tags/add}" method="post">
+    <input type="text" name="name" placeholder="Naziv taga" required />
+    <button type="submit" class="btn">Dodaj Tag</button>
+</form>
+
+<!-- Lista tagova -->
+<ul>
+    <li th:each="tag : ${tags}">
+        <span th:text="${tag.name}">Tag Name</span>
+        <span> (Fotografija: <span th:text="${tag.photos != null ? tag.photos.size() : 0}">0</span>)</span>
+
+        <!-- NOVO: Uredi tag -->
+        <a th:href="@{'/tags/edit/' + ${tag.id}}" class="btn-small">Uredi</a>
+
+        <!-- Link na sve fotografije s ovim tagom -->
+        <a th:href="@{'/tags/' + ${tag.id} + '/photos'}" class="btn-small">Prikaži fotografije</a>
+
+        <!-- Dugme za brisanje taga -->
+        <form th:action="@{'/tags/delete/' + ${tag.id}}" method="post" style="display:inline">
+            <button type="submit" class="btn-small">Obriši</button>
+        </form>
+    </li>
+</ul>
+
+<a th:href="@{/albums}" class="btn">← Nazad na Albume</a>
+
+</body>
+
+</body>
+
+</html>

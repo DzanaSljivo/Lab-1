@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>📷 Dodaj Tag Fotografiji</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}" />
+</head>
+
+<body>
+<header>
+    <h1>📷 Dodaj Tag Fotografiji</h1>
+</header>
+
+<div class="photos-grid">
+    <div class="photo-card">
+        <div class="photo-img-wrapper">
+            <img th:src="${photo.imageUrl}" alt="Fotografija" class="photo-img"/>
+
+            <div class="overlay">
+                <form th:action="@{/tags/addToPhoto}" method="post">
+                    <!-- ID fotografije kao hidden -->
+                    <input type="hidden" name="photoId" th:value="${photo.id}" />
+
+                    <label for="tagId" style="color: #fff; font-weight: 600;">Odaberi postojeći tag:</label>
+                    <select id="tagId" name="tagId">
+                        <option th:each="t : ${tags}" th:value="${t.id}" th:text="${t.name}"></option>
+                    </select>
+
+                    <!-- Dugme prilagođeno stilu stranice -->
+                    <button type="submit" class="btn btn-add-tag">Dodaj tag</button>
+                </form>
+            </div>
+        </div>
+
+        <h3 th:text="${photo.title}">Naslov fotografije</h3>
+        <p th:text="${photo.description}">Opis fotografije</p>
+    </div>
+</div>
+
+<!-- Dugme za povratak -->
+<a th:href="@{/photos}" class="btn">← Nazad na fotografije</a>
+</body>
+</html>

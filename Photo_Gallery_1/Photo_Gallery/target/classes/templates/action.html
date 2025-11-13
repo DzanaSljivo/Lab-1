@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" />
+    <title th:text="'Album: ' + ${album.title}">Album</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}" />
+</head>
+<body>
+<h1 th:text="'Album: ' + ${album.title}"></h1>
+<a th:href="@{/albums}" class="btn">← Povratak na Albume</a> |
+<a th:href="@{/photos}" class="btn">Pregled svih fotografija</a>
+
+<h2>Fotografije u albumu</h2>
+<div class="photos-grid">
+    <div class="photo-card" th:each="p : ${albumPhotos}">
+        <img th:src="@{'/images/' + ${p.imageUrl}}" alt="Fotografija" class="photo-img" />
+        <h3 th:text="${p.title}"></h3>
+        <form th:action="@{/photos/remove}" method="post">
+            <input type="hidden" name="photoId" th:value="${p.id}">
+            <input type="hidden" name="albumId" th:value="${album.id}">
+            <button type="submit" class="btn">Ukloni</button>
+        </form>
+    </div>
+</div>
+
+<h2>Dodaj fotografiju</h2>
+<div class="photos-grid">
+    <div class="photo-card" th:each="p : ${availablePhotos}">
+        <img th:src="@{'/images/' + ${p.imageUrl}}" alt="Fotografija" class="photo-img" />
+        <h3 th:text="${p.title}"></h3>
+        <form th:action="@{/albums/action/addPhoto}" method="post">
+            <input type="hidden" name="albumId" th:value="${album.id}">
+            <input type="hidden" name="photoId" th:value="${p.id}">
+            <button type="submit" class="btn">Dodaj</button>
+        </form>
+    </div>
+</div>
+</body>
+</html>
